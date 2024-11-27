@@ -1,0 +1,53 @@
+#include <iostream>
+#include "Candidato.h"
+
+using namespace std;
+
+int main() {
+    Candidato candidato;
+    string nombreCompleto, profesion, curriculumVitae, correoElectronico, telefono, direccion;
+
+    cout << "Bienvenido a la aplicación de registro de Candidatos\n";
+
+    // Pedir la información al usuario
+    cout << "Introduce tu nombre completo: ";
+    getline(cin, nombreCompleto);
+
+    cout << "Introduce tu profesión: ";
+    getline(cin, profesion);
+
+    cout << "Introduce el enlace o ubicación de tu currículum vitae: ";
+    getline(cin, curriculumVitae);
+
+    cout << "Introduce tu correo electrónico: ";
+    getline(cin, correoElectronico);
+
+    cout << "Introduce tu número de teléfono: ";
+    getline(cin, telefono);
+
+    cout << "Introduce tu dirección: ";
+    getline(cin, direccion);
+
+    // Registrar la información del candidato
+    candidato.registrarInformacion(nombreCompleto, profesion, curriculumVitae, correoElectronico, telefono, direccion);
+
+    // Mostrar la información registrada
+    candidato.mostrarInformacion();
+
+    // Guardar la información en un archivo
+    ofstream archivo("candidato_registrado.txt", ios::out);
+    if (archivo.is_open()) {
+        archivo << "Nombre Completo: " << candidato.obtenerNombreCompleto() << endl;
+        archivo << "Profesión: " << candidato.obtenerProfesion() << endl;
+        archivo << "Correo Electrónico: " << candidato.obtenerCorreoElectronico() << endl;
+        archivo << "Teléfono: " << candidato.obtenerTelefono() << endl;
+        archivo << "Dirección: " << candidato.obtenerDireccion() << endl;
+        archivo << "Currículum Vitae: " << candidato.obtenerCurriculumVitae() << endl;
+        archivo.close();
+        cout << "\nInformación guardada en 'candidato_registrado.txt'.\n";
+    } else {
+        cout << "Error al guardar la información en el archivo.\n";
+    }
+
+    return 0;
+}
