@@ -1,37 +1,47 @@
 #include "UsuarioLogin.h"
 #include <iostream>
-#include <regex>
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 
 // Constructor por defecto
-UsuarioLogin::UsuarioLogin() : correoElectronico(""), nombreUsuario(""), contrasena("") {}
+UsuarioLogin::UsuarioLogin() {
+    correoElectronico = "";
+    nombreUsuario = "";
+    contrasena = "";
+    tipoUsuario = "";
+}
 
-// Método para registrar al usuario
-void UsuarioLogin::registrarUsuario(const string& correo, const string& nombreUsuario, const string& contrasena) {
+// Registrar un usuario con tipo (Contratador o Candidato)
+void UsuarioLogin::registrarUsuario(string correo, string nombreUsuario, string contrasena, string tipoUsuario) {
     this->correoElectronico = correo;
     this->nombreUsuario = nombreUsuario;
     this->contrasena = contrasena;
+    this->tipoUsuario = tipoUsuario;
+
+    // Aquí podrías guardar los datos en un archivo o base de datos si lo deseas
 }
 
-// Método para obtener el correo electrónico
+// Métodos para obtener datos
 string UsuarioLogin::obtenerCorreoElectronico() const {
     return correoElectronico;
 }
 
-// Método para obtener el nombre de usuario
 string UsuarioLogin::obtenerNombreUsuario() const {
     return nombreUsuario;
 }
 
-// Método para verificar si la contraseña es correcta
-bool UsuarioLogin::verificarContrasena(const string& contrasenaIngresada) const {
-    return contrasena == contrasenaIngresada;
+string UsuarioLogin::obtenerTipoUsuario() const {
+    return tipoUsuario;
 }
 
-// Método para validar el correo electrónico (solo verifica '@')
-bool UsuarioLogin::esCorreoValido(const string& correo) const {
-    // Expresión regular simple para verificar si el correo contiene al menos un '@'
-    const regex patronCorreo(R"(^.+@.+$)"); // Asegura que haya algo antes y después del '@'
-    return regex_match(correo, patronCorreo);
+// Validar si el correo electrónico tiene un formato correcto
+bool UsuarioLogin::esCorreoValido(string correo) const {
+    return correo.find('@') != string::npos;  // Verifica que contenga un '@'
+}
+
+// Verificar si la contraseña ingresada es correcta
+bool UsuarioLogin::verificarContrasena(string contrasenaVerificar) const {
+    return contrasena == contrasenaVerificar;
 }
