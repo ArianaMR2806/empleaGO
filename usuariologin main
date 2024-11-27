@@ -5,55 +5,79 @@ using namespace std;
 
 int main() {
     UsuarioLogin usuario;
-    string correo, nombreUsuario, contrasena, contrasenaVerificar;
+    string correo, nombreUsuario, contrasena, contrasenaVerificar, tipoUsuario;
     int opcion;
 
     cout << "Bienvenido a la aplicación de registro\n";
     cout << "Elige una opción:\n";
-    cout << "1. Registrarse con correo electrónico\n";
-    cout << "2. Registrarse con Google\n";
-    cout << "3. Registrarse con Facebook\n";
+    cout << "1. Registrarse como Contratador (empresa que busca personal)\n";
+    cout << "2. Registrarse como Candidato (persona que busca empleo)\n";
+    cout << "3. Registrarse con Google\n";
+    cout << "4. Registrarse con Facebook\n";
     cout << "Opción: ";
     cin >> opcion;
     cin.ignore();  // Para limpiar el buffer de la entrada
 
     if (opcion == 1) {
-        // Opción de registro con correo electrónico
-        cout << "Introduce tu correo electrónico: ";
-        getline(cin, correo);
-
-        // Validar el correo electrónico
-        if (!usuario.esCorreoValido(correo)) {
-            cout << "El correo electrónico no es válido. Debe contener un '@'.\n";
-            return 0;
-        }
-
-        cout << "Introduce tu nombre de usuario: ";
-        getline(cin, nombreUsuario);
-
-        cout << "Introduce tu contraseña: ";
-        getline(cin, contrasena);
-
-        usuario.registrarUsuario(correo, nombreUsuario, contrasena);
-
-        cout << "\nUsuario registrado correctamente con correo electrónico!\n";
+        // Opción de registro como Contratador
+        tipoUsuario = "Contratador";
+        cout << "Registrándose como Contratador (empresa que busca personal)...\n";
     }
     else if (opcion == 2) {
-        // Opción de registro con Google
-        cout << "Registrado correctamente con Google.\n";
+        // Opción de registro como Candidato
+        tipoUsuario = "Candidato";
+        cout << "Registrándose como Candidato (persona que busca empleo)...\n";
     }
     else if (opcion == 3) {
+        // Opción de registro con Google
+        cout << "Registrado correctamente con Google.\n";
+        return 0;
+    }
+    else if (opcion == 4) {
         // Opción de registro con Facebook
         cout << "Registrado correctamente con Facebook.\n";
+        return 0;
     }
     else {
         cout << "Opción inválida. Saliendo...\n";
         return 0;
     }
 
-    // Verificar información del usuario
+    // Obtener correo electrónico, nombre de usuario y contraseña
+    cout << "Introduce tu correo electrónico: ";
+    getline(cin, correo);
+
+    // Validar el correo electrónico
+    UsuarioLogin usuarioTemp;
+    if (!usuarioTemp.esCorreoValido(correo)) {
+        cout << "El correo electrónico no es válido. Debe contener un '@'.\n";
+        return 0;
+    }
+
+    cout << "Introduce tu nombre de usuario: ";
+    getline(cin, nombreUsuario);
+
+    cout << "Introduce tu contraseña: ";
+    getline(cin, contrasena);
+
+    cout << "Introduce tu contraseña nuevamente para verificar: ";
+    getline(cin, contrasenaVerificar);
+
+    // Verificar que las contraseñas coincidan
+    if (contrasena != contrasenaVerificar) {
+        cout << "Las contraseñas no coinciden. Por favor, intente nuevamente.\n";
+        return 0;
+    }
+
+    // Registrar al usuario
+    usuario.registrarUsuario(correo, nombreUsuario, contrasena, tipoUsuario);
+
+    cout << "\nUsuario registrado correctamente como " << tipoUsuario << "!\n";
+
+    // Verificar la información del usuario
     cout << "\nCorreo electrónico: " << usuario.obtenerCorreoElectronico() << endl;
     cout << "Nombre de usuario: " << usuario.obtenerNombreUsuario() << endl;
+    cout << "Tipo de usuario: " << usuario.obtenerTipoUsuario() << endl;
 
     // Intentar login
     cout << "\nIntroduce la contraseña para verificar tu acceso: ";
