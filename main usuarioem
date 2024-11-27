@@ -1,0 +1,56 @@
+#include <iostream>
+#include "usuarioem.h"
+
+using namespace std;
+
+int main() {
+    int opcion;
+    Empresa empresa;
+
+    do {
+        cout << "\n--- Aplicacion de Empleo ---\n";
+        cout << "1. Registrar empresa\n";
+        cout << "2. Mostrar informacion de la empresa registrada\n";
+        cout << "3. Salir\n";
+        cout << "Seleccione una opcion: ";
+        cin >> opcion;
+        cin.ignore(); // Limpiar el buffer del teclado
+
+        switch (opcion) {
+        case 1:
+        {
+            string nombre, nit, logotipo;
+            // Pedir información para registrar la empresa
+            cout << "Ingrese el nombre de la empresa o emprendimiento: ";
+            getline(cin, nombre);
+            empresa.setNombre(nombre);
+
+            cout << "Ingrese el numero de NIT de la empresa: ";
+            getline(cin, nit);
+            empresa.setNit(nit);
+
+            cout << "Ingrese la ruta del logotipo (ej. 'logotipo.png'): ";
+            getline(cin, logotipo);
+            empresa.setLogotipo(logotipo);
+
+            // Registrar la empresa
+            empresa.registrarEmpresa();
+        }
+        break;
+
+        case 2:
+            // Mostrar información de la empresa registrada
+            Empresa::mostrarInformacionEmpresa();
+            break;
+
+        case 3:
+            cout << "Gracias por usar la aplicacion.\n";
+            break;
+
+        default:
+            cout << "Opcion no valida. Por favor, seleccione una opcion valida.\n";
+        }
+    } while (opcion != 3);
+
+    return 0;
+}
