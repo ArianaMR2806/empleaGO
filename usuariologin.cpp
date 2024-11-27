@@ -1,47 +1,33 @@
-#include "UsuarioLogin.h"
-#include <iostream>
-#include <fstream>
-#include <sstream>
+#ifndef USUARIOLOGIN_H
+#define USUARIOLOGIN_H
 
+#include <string>
 using namespace std;
 
-// Constructor por defecto
-UsuarioLogin::UsuarioLogin() {
-    correoElectronico = "";
-    nombreUsuario = "";
-    contrasena = "";
-    tipoUsuario = "";
-}
+class UsuarioLogin {
+private:
+    string correoElectronico;
+    string nombreUsuario;
+    string contrasena;
+    string tipoUsuario;  // "Contratador" o "Candidato"
 
-// Registrar un usuario con tipo (Contratador o Candidato)
-void UsuarioLogin::registrarUsuario(string correo, string nombreUsuario, string contrasena, string tipoUsuario) {
-    this->correoElectronico = correo;
-    this->nombreUsuario = nombreUsuario;
-    this->contrasena = contrasena;
-    this->tipoUsuario = tipoUsuario;
+public:
+    // Constructor por defecto
+    UsuarioLogin();
 
-    // Aquí podrías guardar los datos en un archivo o base de datos si lo deseas
-}
+    // Métodos para registrar al usuario
+    void registrarUsuario(string correo, string nombreUsuario, string contrasena, string tipoUsuario);
 
-// Métodos para obtener datos
-string UsuarioLogin::obtenerCorreoElectronico() const {
-    return correoElectronico;
-}
+    // Métodos para obtener datos del usuario
+    string obtenerCorreoElectronico() const;
+    string obtenerNombreUsuario() const;
+    string obtenerTipoUsuario() const;
 
-string UsuarioLogin::obtenerNombreUsuario() const {
-    return nombreUsuario;
-}
+    // Métodos de validación
+    bool esCorreoValido(string correo) const;
 
-string UsuarioLogin::obtenerTipoUsuario() const {
-    return tipoUsuario;
-}
+    // Verificación de contraseña
+    bool verificarContrasena(string contrasenaVerificar) const;
+};
 
-// Validar si el correo electrónico tiene un formato correcto
-bool UsuarioLogin::esCorreoValido(string correo) const {
-    return correo.find('@') != string::npos;  // Verifica que contenga un '@'
-}
-
-// Verificar si la contraseña ingresada es correcta
-bool UsuarioLogin::verificarContrasena(string contrasenaVerificar) const {
-    return contrasena == contrasenaVerificar;
-}
+#endif
