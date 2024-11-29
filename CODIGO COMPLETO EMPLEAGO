@@ -1,0 +1,248 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+// Estructuras para manejar usuarios y empresas
+struct Usuario {
+    string nombre;
+    string correo;
+    string habilidades;
+    string curriculum;
+    string experiencia;
+    int edad;
+    string disponibilidad;
+};
+
+struct Empresa {
+    string nombreEmpresa;
+    string nit;
+    string correo;
+    string telefono;
+    vector<string> puestosDisponibles;
+    vector<string> reseñas;
+};
+
+// Vectores para almacenar usuarios y empresas
+vector<Usuario> usuarios;
+vector<Empresa> empresas;
+
+// Prototipos de funciones
+void login();
+void menuPrincipal();
+void menuUsuario();
+void menuEmpresa();
+void crearEditarPerfilUsuario();
+void mostrarPuestosDisponibles();
+void recursosAcademicos();
+void reseñasUsuario();
+void crearEditarPerfilEmpresa();
+void publicarPuestosDisponibles();
+void verReseñasEmpresa();
+void verSolicitudesTrabajo();
+
+// Función principal
+int main() {
+    login();
+    return 0;
+}
+
+// Función para el login
+void login() {
+    cout << "Bienvenido a Empleago\n";
+    cout << "Inicia sesión con tu correo electrónico: ";
+    string correo;
+    cin >> correo;
+    cout << "Inicio de sesión exitoso.\n";
+    menuPrincipal();
+}
+
+// Menú principal
+void menuPrincipal() {
+    int opcion;
+    do {
+        cout << "\nMenú Principal:\n";
+        cout << "1. Usuario en busca de empleo\n";
+        cout << "2. Empresa o emprendimiento\n";
+        cout << "3. Salir\n";
+        cout << "Selecciona una opción: ";
+        cin >> opcion;
+
+        switch (opcion) {
+            case 1:
+                menuUsuario();
+                break;
+            case 2:
+                menuEmpresa();
+                break;
+            case 3:
+                cout << "¡Gracias por usar Empleago! Adiós.\n";
+                break;
+            default:
+                cout << "Opción inválida. Intenta de nuevo.\n";
+        }
+    } while (opcion != 3);
+}
+
+// Menú de usuario
+void menuUsuario() {
+    int opcion;
+    do {
+        cout << "\nMenú Usuario:\n";
+        cout << "1. Crear o editar perfil\n";
+        cout << "2. Ver puestos disponibles\n";
+        cout << "3. Recursos académicos\n";
+        cout << "4. Reseñas\n";
+        cout << "5. Salir\n";
+        cout << "Selecciona una opción: ";
+        cin >> opcion;
+
+        switch (opcion) {
+            case 1:
+                crearEditarPerfilUsuario();
+                break;
+            case 2:
+                mostrarPuestosDisponibles();
+                break;
+            case 3:
+                recursosAcademicos();
+                break;
+            case 4:
+                reseñasUsuario();
+                break;
+            case 5:
+                cout << "Regresando al menú principal.\n";
+                break;
+            default:
+                cout << "Opción inválida. Intenta de nuevo.\n";
+        }
+    } while (opcion != 5);
+}
+
+// Funciones del menú de usuario
+void crearEditarPerfilUsuario() {
+    Usuario u;
+    cout << "\nCreación/Edición de perfil de usuario:\n";
+    cout << "Nombre: ";
+    cin.ignore();
+    getline(cin, u.nombre);
+    cout << "Correo: ";
+    getline(cin, u.correo);
+    cout << "Habilidades: ";
+    getline(cin, u.habilidades);
+    cout << "Currículum vitae: ";
+    getline(cin, u.curriculum);
+    cout << "Experiencia laboral: ";
+    getline(cin, u.experiencia);
+    cout << "Edad: ";
+    cin >> u.edad;
+    cin.ignore();
+    cout << "Disponibilidad: ";
+    getline(cin, u.disponibilidad);
+
+    usuarios.push_back(u);
+    cout << "Perfil creado/actualizado con éxito.\n";
+}
+
+void mostrarPuestosDisponibles() {
+    cout << "\nPuestos disponibles:\n";
+    for (const auto &empresa : empresas) {
+        cout << "Empresa: " << empresa.nombreEmpresa << "\n";
+        for (const auto &puesto : empresa.puestosDisponibles) {
+            cout << " - " << puesto << "\n";
+        }
+    }
+}
+
+void recursosAcademicos() {
+    cout << "\nRecursos Académicos:\n";
+    cout << "1. Cómo crear un CV.\n";
+    cout << "2. Qué decir en una entrevista de trabajo.\n";
+    cout << "3. Charlas TED recomendadas.\n";
+}
+
+void reseñasUsuario() {
+    cout << "\nReseñas de empresas con las que has trabajado:\n";
+    cout << "No hay reseñas disponibles por ahora.\n"; // Simulación
+}
+
+// Menú de empresa
+void menuEmpresa() {
+    int opcion;
+    do {
+        cout << "\nMenú Empresa:\n";
+        cout << "1. Crear o editar perfil\n";
+        cout << "2. Publicar puestos disponibles\n";
+        cout << "3. Ver reseñas\n";
+        cout << "4. Ver solicitudes de trabajo\n";
+        cout << "5. Salir\n";
+        cout << "Selecciona una opción: ";
+        cin >> opcion;
+
+        switch (opcion) {
+            case 1:
+                crearEditarPerfilEmpresa();
+                break;
+            case 2:
+                publicarPuestosDisponibles();
+                break;
+            case 3:
+                verReseñasEmpresa();
+                break;
+            case 4:
+                verSolicitudesTrabajo();
+                break;
+            case 5:
+                cout << "Regresando al menú principal.\n";
+                break;
+            default:
+                cout << "Opción inválida. Intenta de nuevo.\n";
+        }
+    } while (opcion != 5);
+}
+
+// Funciones del menú de empresa
+void crearEditarPerfilEmpresa() {
+    Empresa e;
+    cout << "\nCreación/Edición de perfil de empresa:\n";
+    cout << "Nombre de la empresa: ";
+    cin.ignore();
+    getline(cin, e.nombreEmpresa);
+    cout << "NIT: ";
+    getline(cin, e.nit);
+    cout << "Correo: ";
+    getline(cin, e.correo);
+    cout << "Teléfono: ";
+    getline(cin, e.telefono);
+
+    empresas.push_back(e);
+    cout << "Perfil de empresa creado/actualizado con éxito.\n";
+}
+
+void publicarPuestosDisponibles() {
+    if (empresas.empty()) {
+        cout << "No hay empresas registradas.\n";
+        return;
+    }
+    string puesto;
+    cout << "\nPublicar puestos disponibles (escribe 'fin' para terminar):\n";
+    cin.ignore();
+    while (true) {
+        cout << "Puesto: ";
+        getline(cin, puesto);
+        if (puesto == "fin") break;
+        empresas.back().puestosDisponibles.push_back(puesto);
+    }
+    cout << "Puestos publicados con éxito.\n";
+}
+
+void verReseñasEmpresa() {
+    cout << "\nReseñas sobre la empresa:\n";
+    cout << "No hay reseñas disponibles por ahora.\n"; // Simulación
+}
+
+void verSolicitudesTrabajo() {
+    cout << "\nSolicitudes de trabajo recibidas:\n";
+    cout << "No hay solicitudes por ahora.\n"; // Simulación
+}
